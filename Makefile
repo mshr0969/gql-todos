@@ -32,3 +32,7 @@ migrate-drop:
 .PHYONY: gen-dbmodel
 gen-dbmodel:
 	go run -mod=mod github.com/xo/xo schema mysql://$(RDB_USER):$(RDB_PASSWORD)@$(RDB_HOST):$(RDB_PORT)/$(RDB_NAME) --out db_model -e *.created_at -e *.updated_at --src db_model/templates/go
+
+.PHYONY: clean-dbmodel
+clean-dbmodel:
+	rm -rf db_model/*.xo.go
