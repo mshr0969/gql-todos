@@ -1,0 +1,20 @@
+-- migrate:up
+CREATE TABLE users (
+    id VARCHAR(36) PRIMARY KEY COMMENT 'ID',
+    name VARCHAR(255) NOT NULL COMMENT 'ユーザー名'
+);
+
+CREATE TABLE todos (
+    id VARCHAR(36) PRIMARY KEY COMMENT 'ID',
+    user_id VARCHAR(36) NOT NULL COMMENT 'ユーザーID',
+    text VARCHAR(255) NOT NULL COMMENT 'テキスト',
+    done BOOLEAN DEFAULT FALSE COMMENT '完了フラグ',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- migrate:down
+DROP TABLE todos;
+DROP TABLE users;
+
